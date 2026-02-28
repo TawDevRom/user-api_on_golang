@@ -8,6 +8,3 @@ Thumbs.db
 
 #Секреты
 .env
-
-#уберём тяжёлые фильмы
-assets/player/*.*
