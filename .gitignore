@@ -2,9 +2,16 @@
 .DS_store
 Thumbs.db
 
+# Удаление БД
+*.db
+
 #IDE
 .vscode/
 .idea/
 
+# Кеш Go
+vendor/
+
 #Секреты
 .env
+.env.local
