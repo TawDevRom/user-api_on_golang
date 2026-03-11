@@ -20,7 +20,7 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		}
 		_, err := auth.ParseToken(tokenStr)
 		if err != nil {
-			http.Error(w, "Непрпаильный токен", http.StatusUnauthorized)
+			http.Error(w, "Неправильный токен", http.StatusUnauthorized)
 			return
 		}
 		next(w, r)
