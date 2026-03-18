@@ -5,9 +5,15 @@ import (
 	"net/http"
 	"user-api/db"
 	"user-api/router"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Ошибка загрузки .env файла")
+	}
 	db.InitDB()
 
 	mux := router.SetupRouter()
