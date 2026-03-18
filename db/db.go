@@ -4,21 +4,30 @@ import (
 	"database/sql"
 	"log"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/lib/pq"
 )
 
 var Db *sql.DB
 
 func InitDB() {
+	connStr := "host=127.0.0.1 port=5432 user=postgres password=postgres dbname=userapi sslmode=disable"
+
 	var err error
-	Db, err = sql.Open("sqlite3", "./users.db")
+	Db, err = sql.Open("postgres", connStr)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Ошибка подключения к БД:", err)
 	}
+
+	err = Db.Ping()
+	if err != nil {
+		log.Fatal("БД не отвечает:", err)
+	}
+
+	log.Println("Подключение к PostgreSQL успешно!")
 
 	_, err = Db.Exec(`CREATE TABLE IF NOT EXISTS users 
 	(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		id SERIAL PRIMARY KEY,
 		name TEXT,
 		age INTEGER,
 		login TEXT UNIQUE,
@@ -26,6 +35,6 @@ func InitDB() {
 	)`)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Ошибка создания таблиц:", err)
 	}
 }
